@@ -42,9 +42,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Board")
 	TSubclassOf<class ABoard> BoardSetup;
 
+	UPROPERTY(VisibleDefaultsOnly, Category = "References")
+	class ABoard* BoardRef;
+
 	//—сылка на наш HUD
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")
 	class UTicTacHUD* GameHUDRef;
+
+
 
 	//‘ункции
 
