@@ -17,16 +17,16 @@ public:
 	UBlockGrid();
 
 	UFUNCTION()
-		void Init(const uint32 SizeOfGrid);
+	void Init(const uint32 SizeOfGrid);
 
 	UFUNCTION()
-		ABlock* GetBlockAt(const uint32 Row, const uint32 Column) const;
+	ABlock* GetBlockAt(const uint32 Row, const uint32 Column) const;
 
 	UFUNCTION()
-		void Add(ABlock* Block);
+	void Add(ABlock* Block);
 
 	UFUNCTION()
-		void ResetGrid() const;
+	void ResetGrid() const;
 
 
 private:

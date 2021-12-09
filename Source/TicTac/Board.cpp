@@ -55,6 +55,48 @@ void ABoard::CreateBoard()
 
 	UE_LOG(LogTemp, Warning, TEXT("Создаем доску для игры..."));
 
+	Grid = NewObject<UBlockGrid>();  // шаблон для конструирования объектов 
+	Grid->Init(this->Size);  // размер назначим через BP_Board
+
+	// Вложенный цикл для спауна кубов , за одну итерацию внешнего спавним блоки с определенным промежутком во внутреннем цикле 
+	auto BlockIndex = 0;
+
+	for (int i = 0; i < Size; i++)
+	{
+		for (int j = 0; j < Size; j++)
+		{
+			const float XOffSet = i * BlockSpacing;
+			const float YOffSet = j * BlockSpacing;
+			const FVector BlockLocation = FVector(XOffSet, YOffSet, 0.0f) + GetActorLocation();
+
+			FActorSpawnParameters SpawnParameters;
+			SpawnParameters.Owner = this;
+
+			ABlock* NewBlock = GetWorld()->SpawnActor<ABlock>(
+				BlockSetup,
+				BlockLocation,
+				FRotator(90.0f, 0.0f, 0.0f),
+				SpawnParameters);
+
+			// устанавливаем ID для блоков, позже получим доступ к кубу 
+			 NewBlock->BoardRef = this;
+			
+			NewBlock->AttachToActor(NewBlock->BoardRef, FAttachmentTransformRules::KeepWorldTransform);
+			NewBlock->BlockIndex = ++BlockIndex; // starts from 1 to 9
+		
+			Grid->Add(NewBlock);
+
+			auto ID = Grid->GetBlockAt(i, j)->BlockID;
+			
+			UE_LOG(LogTemp, Warning, TEXT("%s"), *FString::FromInt(ID));
+
+			UE_LOG(LogTemp, Warning, TEXT("Block loc: %s"), *NewBlock->GetActorLocation().ToString());
+
+		}
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Board created"));
+
 
 }
 

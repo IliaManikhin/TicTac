@@ -2,12 +2,19 @@
 
 
 #include "Block.h"
+#include "Board.h"
 
 // Sets default values
 ABlock::ABlock()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+
+	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("DummyRoot"));
+	RootComponent = DummyRoot;
+
+	BlockMesh = CreateDefaultSubobject<UStaticMeshComponent>("BlockModel");
+	BlockMesh->SetupAttachment(DummyRoot);
 
 }
 
