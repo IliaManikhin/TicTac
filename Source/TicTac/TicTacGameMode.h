@@ -49,8 +49,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "References")
 	class UTicTacHUD* GameHUDRef;
 
-
-
 	//Функции
 
 	// Event для вызова в Game Mode для отображения BP TicTacHUD
@@ -62,5 +60,13 @@ public:
 
 	UFUNCTION()
 	void ShowResult(int Result);
+
+	FORCEINLINE bool IsGameRunning() const { return bIsGameRunning; }
+
+private:
+
+	UPROPERTY()
+	bool bIsGameRunning;
+
 
 };

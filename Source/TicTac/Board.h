@@ -61,6 +61,15 @@ public:
 	UPROPERTY()
 		int RemainEmptyCells;
 
+	UFUNCTION()
+	FORCEINLINE int32 GetPlayerTurnId() const { return GameModeRef->CurrentPlayerId; }
+
+	UFUNCTION()
+	void SetPlayerTurn(const int32 CurrentPlayerId) const;
+
+	UFUNCTION()
+	void ResetBoard();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

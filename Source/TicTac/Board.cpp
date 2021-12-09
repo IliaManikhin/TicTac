@@ -27,7 +27,7 @@ void UBlockGrid::ResetGrid() const
 {
 	for (const auto& Block : BlockArray)
 	{
-		//Block->ResetBlock();
+		Block->ResetBlock();
 	}
 }
 
@@ -98,6 +98,27 @@ void ABoard::CreateBoard()
 	UE_LOG(LogTemp, Warning, TEXT("Board created"));
 
 
+}
+
+void ABoard::SetPlayerTurn(const int32 CurrentPlayerId) const
+{
+	GameModeRef->CurrentPlayerId = CurrentPlayerId;
+
+	if (CurrentPlayerId == ATicTacGameMode::Player1Id)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player One Turn"));
+		
+	}
+	else if (CurrentPlayerId == ATicTacGameMode::Player2Id)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player Two Turn"));
+	}
+}
+
+void ABoard::ResetBoard()
+{
+	Grid->ResetGrid();
+	RemainEmptyCells = Size * Size;
 }
 
 // Called every frame
