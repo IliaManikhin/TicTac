@@ -61,6 +61,13 @@ public:
 	UFUNCTION()
 	void ShowResult(int Result);
 
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	int32 GetResultToHud();
+
+	int32 ResultToHud = 2;
+
+	
+
 	FORCEINLINE bool IsGameRunning() const { return bIsGameRunning; }
 
 private:

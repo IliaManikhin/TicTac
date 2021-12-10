@@ -44,13 +44,15 @@ void ATicTacGameMode::ReplayGame()
 	BoardRef->ResetBoard();
 	CurrentPlayerId = Player1Id;
 	UE_LOG(LogTemp, Warning, TEXT("Now turn of %i"), CurrentPlayerId);
-	//GameHUDRef->SetInfoText(FName(TEXT("Player 1 [X] Turn...")));
+	ResultToHud = 2;
 	bIsGameRunning = true;
 	UE_LOG(LogTemp, Warning, TEXT("Game is reset"));
 }
 
 void ATicTacGameMode::ShowResult(int Result)
 {
+	ResultToHud = Result;
+
 	switch (Result)
 	{
 	case 0:
@@ -69,3 +71,11 @@ void ATicTacGameMode::ShowResult(int Result)
 	}
 	bIsGameRunning = false;
 }
+
+int32 ATicTacGameMode::GetResultToHud()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Result to HUD we have here %i"), ResultToHud);
+
+	return ResultToHud;
+}
+

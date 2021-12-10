@@ -19,5 +19,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	void TestFunction();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
+	void OnReplayButtonClicked();
+
 	
 };
