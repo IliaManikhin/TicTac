@@ -32,10 +32,10 @@ public:
 private:
 	//Массив для блоков
 	UPROPERTY()
-		TArray<ABlock*> BlockArray;
+	TArray<ABlock*> BlockArray;
 
 	UPROPERTY()
-		uint32 Size;
+	uint32 Size;
 
 };
 
@@ -50,16 +50,18 @@ public:
 
 	// Свойства в анрил
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Block")
-		TSubclassOf<class ABlock> BlockSetup; // Сможем взять наш блок BP , и потом создать инстанс 
+	TSubclassOf<class ABlock> BlockSetup; // Сможем взять наш блок BP , и потом создать инстанс 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Grid") // Размер сетки 
-		int32 Size;
+	int32 Size;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Grid") // Расстояние между блоками 
-		float BlockSpacing;
+	float BlockSpacing;
 
+	// Устанавливаем в ResetBoard()
+	//Потом в классе блок, испоользуем для контроля сколько осталось пустых ячеек
 	UPROPERTY()
-		int RemainEmptyCells;
+	int RemainEmptyCells;
 
 	UFUNCTION()
 	FORCEINLINE int32 GetPlayerTurnId() const { return GameModeRef->CurrentPlayerId; }
@@ -70,14 +72,18 @@ public:
 	UFUNCTION()
 	void ResetBoard();
 
+	UFUNCTION()
+	void CheckBoard();
+
+	UFUNCTION()
+	bool IsMatchFound();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+	
 	UPROPERTY(VisibleDefaultsOnly, Category = "References")
 	ATicTacGameMode* GameModeRef;
 

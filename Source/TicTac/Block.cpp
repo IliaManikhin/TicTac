@@ -23,13 +23,21 @@ ABlock::ABlock()
 	bIsAvailable = true;
 }
 
+// Called when the game starts or when spawned
+void ABlock::BeginPlay()
+{
+	Super::BeginPlay();
+
+}
+
 void ABlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	if (!bIsAvailable || !BoardRef->GameModeRef->IsGameRunning()) return;
 
+	// ’одит первый игрок потому что в ReplayGame устанавливаетс€ enum на значение 1го игрока
+	// ѕотом устанавливаем ход второго игрока и так далее
 	if (BoardRef->GetPlayerTurnId() == ATicTacGameMode::Player1Id)
 	{
-		
 		BlockID = ATicTacGameMode::Player1Id;
 		BlockMesh->SetMaterial(0, CrossBlockMaterial);
 		BoardRef->SetPlayerTurn(ATicTacGameMode::Player2Id);
@@ -42,14 +50,15 @@ void ABlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 	}
 
 	bIsAvailable = false;
+	// ќтсчитываем количество оставшихс€ пустых €чеек, после каждого хода 
 	BoardRef->RemainEmptyCells--;
 	if (BoardRef->RemainEmptyCells < 0)
 	{
 		BoardRef->RemainEmptyCells = 0;
 	}
 
-	//TODO create win states 
-	//BoardRef->CheckBoard();
+	//ѕровер€ем текущее состо€ние игры
+	BoardRef->CheckBoard();
 
 	UE_LOG(LogTemp, Warning, TEXT("Block clicked"));
 }
@@ -58,6 +67,7 @@ void ABlock::ResetBlock()
 {
 	bIsAvailable = true;
 	BlockID = BlockIndex;
+	UE_LOG(LogTemp, Warning, TEXT("block id [%s] "), *FString::FromInt(BlockID));
 	SetEmptyMaterial();
 }
 
@@ -76,17 +86,4 @@ void ABlock::SetRoundMaterial() const
 	BlockMesh->SetMaterial(0, RoundBlockMaterial);
 }
 
-// Called when the game starts or when spawned
-void ABlock::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ABlock::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 

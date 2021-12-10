@@ -51,5 +51,21 @@ void ATicTacGameMode::ReplayGame()
 
 void ATicTacGameMode::ShowResult(int Result)
 {
-
+	switch (Result)
+	{
+	case 0:
+		UE_LOG(LogTemp, Warning, TEXT("Player 1 [X] won the match!"));
+		//GameHUDRef->SetInfoText(FName(TEXT("Player 1 [X] won the match!")));
+		break;
+	case 1:
+		UE_LOG(LogTemp, Warning, TEXT("Player 2 [O] won the match!"));
+		//GameHUDRef->SetInfoText(FName(TEXT("Player 2 [O] won the match!")));
+		break;
+	case -1:
+		UE_LOG(LogTemp, Warning, TEXT("The match ended with a draw!"));
+		//GameHUDRef->SetInfoText(FName(TEXT("The match ended with a draw!")));
+		break;
+	default:;
+	}
+	bIsGameRunning = false;
 }

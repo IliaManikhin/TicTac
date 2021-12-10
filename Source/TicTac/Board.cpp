@@ -9,6 +9,7 @@ UBlockGrid::UBlockGrid() = default;
 void UBlockGrid::Init(const uint32 SizeOfGrid)
 {
 	Size = SizeOfGrid;
+	//ќчищаем массив , с ожидаемым размером 
 	BlockArray.Empty(Size * Size); 
 }
 
@@ -78,21 +79,22 @@ void ABoard::CreateBoard()
 				FRotator(90.0f, 0.0f, 0.0f),
 				SpawnParameters);
 
-			// устанавливаем ID дл€ блоков, позже получим доступ к кубу 
+			// устанавливаем ID дл€ блоков, позже получим доступ к блоку
 			 NewBlock->BoardRef = this;
 			
 			NewBlock->AttachToActor(NewBlock->BoardRef, FAttachmentTransformRules::KeepWorldTransform);
 			NewBlock->BlockIndex = ++BlockIndex; // starts from 1 to 9
-		
+
 			Grid->Add(NewBlock);
 
 			auto ID = Grid->GetBlockAt(i, j)->BlockID;
 			
-			UE_LOG(LogTemp, Warning, TEXT("%s"), *FString::FromInt(ID));
+			
 
 			UE_LOG(LogTemp, Warning, TEXT("Block loc: %s"), *NewBlock->GetActorLocation().ToString());
 
 		}
+		
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Board created"));
@@ -121,10 +123,56 @@ void ABoard::ResetBoard()
 	RemainEmptyCells = Size * Size;
 }
 
-// Called every frame
-void ABoard::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
+//≈сли на доске есть победна€ комбинаци€ , то какому игроку принадлежит 
+void ABoard::CheckBoard()
+{
+	const bool MatchFound = IsMatchFound();
+
+	//«начени€: 0 - победа Player1, 1 - победа Player2, -1 - ничь€
+	if (MatchFound && GameModeRef->CurrentPlayerId == ATicTacGameMode::Player1Id)
+	{
+		// 1 потому что, мы переключаем ход игрока после клика на блок,
+		//т.е. если есть победа, ход другого игрока не состоитс€ и мы фиксириуем игрок с каким ID сделал победный ход
+		GameModeRef->ShowResult(1); 
+	}
+
+	if (MatchFound && GameModeRef->CurrentPlayerId == ATicTacGameMode::Player2Id)
+	{
+		GameModeRef->ShowResult(0);
+	}
+
+	//Ќа доске ничь€ 
+	if (!MatchFound && RemainEmptyCells <= 0)
+	{
+		GameModeRef->ShowResult(-1);
+	}
 }
 
+// ѕровер€ем есть ли на доске победна€ комбинаци€ символов 
+bool ABoard::IsMatchFound()
+{
+	for (int i = 0; i < Size; i++)
+	{
+		//ѕровер€ем по горизонтали
+		bool MatchFound = Grid->GetBlockAt(i, 0)->BlockID == Grid->GetBlockAt(i, 1)->BlockID &&
+			Grid->GetBlockAt(i, 0)->BlockID == Grid->GetBlockAt(i, 2)->BlockID;
+		if (MatchFound) { return true; }
+
+		//ѕровер€ем по вертикали
+		MatchFound = Grid->GetBlockAt(0, i)->BlockID == Grid->GetBlockAt(1, i)->BlockID &&
+			Grid->GetBlockAt(0, i)->BlockID == Grid->GetBlockAt(2, i)->BlockID;
+		if (MatchFound) { return true; }
+
+		//ѕровер€ем диагонали
+		MatchFound = Grid->GetBlockAt(0, 0)->BlockID == Grid->GetBlockAt(1, 1)->BlockID &&
+			Grid->GetBlockAt(0, 0)->BlockID == Grid->GetBlockAt(2, 2)->BlockID;
+		if (MatchFound) { return true; }
+
+		MatchFound = Grid->GetBlockAt(0, 2)->BlockID == Grid->GetBlockAt(1, 1)->BlockID &&
+			Grid->GetBlockAt(0, 2)->BlockID == Grid->GetBlockAt(2, 0)->BlockID;
+		if (MatchFound) { return true; }
+	}
+
+	return false;
+}
