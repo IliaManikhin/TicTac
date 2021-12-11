@@ -41,12 +41,16 @@ void ABlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 		BlockID = ATicTacGameMode::Player1Id;
 		BlockMesh->SetMaterial(0, CrossBlockMaterial);
 		BoardRef->SetPlayerTurn(ATicTacGameMode::Player2Id);
+		isFireBlock = true;
+		isElectroBlock = false;
 	}
 	else if (BoardRef->GetPlayerTurnId() == ATicTacGameMode::Player2Id)
 	{
 		BlockID = ATicTacGameMode::Player2Id;
 		BlockMesh->SetMaterial(0, RoundBlockMaterial);
 		BoardRef->SetPlayerTurn(ATicTacGameMode::Player1Id);
+		isFireBlock = false;
+		isElectroBlock = true;
 	}
 
 	bIsAvailable = false;

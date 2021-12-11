@@ -73,3 +73,7 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 Content/StarterContent/
+Content/Megascans/3D_Assets/Huge_Canyon_Sandstone_Cliff_veoneio/Normal_2K_LOD0_veoneio.uasset
+Content/Megascans/3D_Assets/
+Content/Megascans/Surfaces/Canyon_Rocky_Ground_vemtfab/Roughness_2K_vemtfab.uasset
+Content/Megascans/Surfaces/

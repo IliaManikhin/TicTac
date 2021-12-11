@@ -23,5 +23,11 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
 	void OnReplayButtonClicked();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
+	void ShowPlayerID();
+
+	int32 IDOfPlayerWhosTurn;
+
+	
 	
 };

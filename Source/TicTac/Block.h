@@ -53,6 +53,12 @@ public:
 	UFUNCTION()
 	void SetRoundMaterial() const;
 
+	UPROPERTY(BlueprintReadOnly, Category = "SFX")
+	bool isFireBlock;
+
+	UPROPERTY(BlueprintReadOnly, Category = "SFX")
+	bool isElectroBlock;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

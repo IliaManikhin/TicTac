@@ -64,10 +64,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "HUD")
 	int32 GetResultToHud();
 
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	int32 GetPlayerID();
+
 	int32 ResultToHud = 2;
 
 	
-
 	FORCEINLINE bool IsGameRunning() const { return bIsGameRunning; }
 
 private:

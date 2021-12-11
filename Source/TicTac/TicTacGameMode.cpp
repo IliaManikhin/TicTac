@@ -2,7 +2,9 @@
 
 
 #include "TicTacGameMode.h"
+#include "TicTacHUD.h"
 #include "Board.h"
+
 
 ATicTacGameMode::ATicTacGameMode()
 {
@@ -33,6 +35,9 @@ void ATicTacGameMode::BeginPlay()
 	}
 
 	AddGameHUD();
+
+	
+	
 
 	ReplayGame();
 
@@ -74,8 +79,11 @@ void ATicTacGameMode::ShowResult(int Result)
 
 int32 ATicTacGameMode::GetResultToHud()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Result to HUD we have here %i"), ResultToHud);
-
 	return ResultToHud;
+}
+
+int32 ATicTacGameMode::GetPlayerID()
+{
+	return CurrentPlayerId;
 }
 
