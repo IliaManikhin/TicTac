@@ -11,6 +11,7 @@ void UBlockGrid::Init(const uint32 SizeOfGrid)
 	Size = SizeOfGrid;
 	//Очищаем массив , с ожидаемым размером 
 	BlockArray.Empty(Size * Size); 
+	
 }
 
 ABlock* UBlockGrid::GetBlockAt(const uint32 Row, const uint32 Column) const
@@ -44,6 +45,7 @@ ABoard::ABoard()
 void ABoard::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	CreateBoard();
 }
 
@@ -54,14 +56,12 @@ void ABoard::CreateBoard()
 	auto* World = GetWorld();
 	if (!World) return;
 
-	UE_LOG(LogTemp, Warning, TEXT("Создаем доску для игры..."));
-
 	Grid = NewObject<UBlockGrid>();  // шаблон для конструирования объектов 
 	Grid->Init(this->Size);  // размер назначим через BP_Board
 
 	// Вложенный цикл для спауна кубов , за одну итерацию внешнего спавним блоки с определенным промежутком во внутреннем цикле 
 	auto BlockIndex = 0;
-
+	
 	for (int i = 0; i < Size; i++)
 	{
 		for (int j = 0; j < Size; j++)
@@ -89,8 +89,6 @@ void ABoard::CreateBoard()
 
 			auto ID = Grid->GetBlockAt(i, j)->BlockID;
 			
-			
-
 			UE_LOG(LogTemp, Warning, TEXT("Block loc: %s"), *NewBlock->GetActorLocation().ToString());
 
 		}
@@ -113,6 +111,7 @@ void ABoard::SetPlayerTurn(const int32 CurrentPlayerId) const
 	}
 	else if (CurrentPlayerId == ATicTacGameMode::Player2Id)
 	{
+		
 		UE_LOG(LogTemp, Warning, TEXT("Player Two Turn"));
 	}
 }

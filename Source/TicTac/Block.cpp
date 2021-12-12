@@ -21,6 +21,7 @@ ABlock::ABlock()
 	BlockMesh->OnClicked.AddDynamic(this, &ABlock::BlockClicked);
 
 	bIsAvailable = true;
+
 }
 
 // Called when the game starts or when spawned
@@ -28,7 +29,10 @@ void ABlock::BeginPlay()
 {
 	Super::BeginPlay();
 
+
 }
+
+
 
 void ABlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
@@ -51,6 +55,7 @@ void ABlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 		BoardRef->SetPlayerTurn(ATicTacGameMode::Player1Id);
 		isFireBlock = false;
 		isElectroBlock = true;
+		
 	}
 
 	bIsAvailable = false;
@@ -64,11 +69,12 @@ void ABlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 	//Проверяем текущее состояние игры
 	BoardRef->CheckBoard();
 
-	UE_LOG(LogTemp, Warning, TEXT("Block clicked"));
+	//UE_LOG(LogTemp, Warning, TEXT("Block clicked"));
 }
 
 void ABlock::ResetBlock()
 {
+	
 	bIsAvailable = true;
 	BlockID = BlockIndex;
 	UE_LOG(LogTemp, Warning, TEXT("block id [%s] "), *FString::FromInt(BlockID));
@@ -89,5 +95,6 @@ void ABlock::SetRoundMaterial() const
 {
 	BlockMesh->SetMaterial(0, RoundBlockMaterial);
 }
+
 
 

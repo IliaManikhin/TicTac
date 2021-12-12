@@ -55,6 +55,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
 	void AddGameHUD();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HUD")
+	void OnDetectedDraw();
+
 	UFUNCTION(BlueprintCallable, Category = "HUD")
 	void ReplayGame();
 
@@ -69,7 +72,6 @@ public:
 
 	int32 ResultToHud = 2;
 
-	
 	FORCEINLINE bool IsGameRunning() const { return bIsGameRunning; }
 
 private:
